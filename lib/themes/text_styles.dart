@@ -21,3 +21,10 @@ TextStyle get regular {
     color: Colors.black,
   );
 }
+
+TextStyle get medium {
+  return GoogleFonts.hindSiliguri(
+    fontWeight: FontWeight.w500,
+    color: Colors.black,
+  );
+}
