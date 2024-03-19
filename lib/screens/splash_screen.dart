@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:periods/screens/home_page.dart';
+import 'package:periods/screens/login_page.dart';
 import 'package:periods/themes/colors.dart';
 import 'package:periods/themes/text_styles.dart';
 
@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 70,
             ),
             Padding(
@@ -33,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 height: 293,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 65,
             ),
             Row(
@@ -47,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     color: primaryClr,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 8,
                 ),
                 Text(
@@ -59,7 +59,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Row(
@@ -75,12 +75,12 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
               ],
             ),
-            Spacer(),
+            const Spacer(),
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: TextButton(
                 onPressed: () {
-                  Get.to(() => HomePage());
+                  Get.to(() => const LogInPage());
                 },
                 style: ButtonStyle(
                   textStyle: MaterialStateProperty.all<TextStyle>(
@@ -108,10 +108,10 @@ class _SplashScreenState extends State<SplashScreen> {
                     ),
                   ),
                 ),
-                child: Text('Get Started'),
+                child: const Text('Get Started'),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
           ],
@@ -119,4 +119,5 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
     );
   }
+
 }

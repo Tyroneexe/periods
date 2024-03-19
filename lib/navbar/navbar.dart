@@ -34,7 +34,7 @@ class _NavBarState extends State<NavBar> {
             showUnselectedLabels: false,
             elevation: 0,
             selectedItemColor: primaryClr,
-            unselectedItemColor: secondaryClr,
+            unselectedItemColor: greyClr,
             currentIndex: controller.tabIndex,
             onTap: controller.changeTabIndex,
             selectedFontSize: 0,
