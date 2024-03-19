@@ -1,7 +1,9 @@
 // ignore_for_file: must_be_immutable, unused_field, non_constant_identifier_names
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:periods/screens/about_us.dart';
 import 'package:periods/screens/home_page.dart';
+import 'package:periods/screens/settings_page.dart';
 import 'package:periods/themes/colors.dart';
 import '../themes/text_styles.dart';
 
@@ -159,7 +161,7 @@ class _NavitionDrawerState extends State<NavitionDrawer> {
                 ),
               ),
               onTap: () {
-                Get.to(() => const HomePage());
+                Get.to(() => const SettingsPage());
               },
             ),
           ),
@@ -267,7 +269,7 @@ class _NavitionDrawerState extends State<NavitionDrawer> {
                 ),
               ),
               onTap: () {
-                Get.to(() => const HomePage());
+                Get.to(() => const AboutUs());
                 // Get.to(() => Test());
               },
             ),
@@ -279,47 +281,6 @@ class _NavitionDrawerState extends State<NavitionDrawer> {
             indent: 25,
             endIndent: 25,
           ),
-          // Row(
-          //   children: [
-          //     SizedBox(
-          //       width: MediaQuery.of(context).size.width / 6,
-          //     ),
-          //     Text(
-          //       'Light',
-          //       style: bold.copyWith(
-          //         fontSize: 16,
-          //         color: Get.isDarkMode ? Colors.grey : Colors.black,
-          //       ),
-          //     ),
-          //! Dark Mode Toggle
-          // Padding(
-          //   padding: const EdgeInsets.only(
-          //     right: 10,
-          //     left: 10,
-          //   ),
-          //   child: Switch(
-          //     value: Get.isDarkMode,
-          //     splashRadius: 10,
-          //     activeTrackColor: switchClr,
-          //     inactiveTrackColor: Colors.grey,
-          //     inactiveThumbColor: Colors.white,
-          //     activeColor: blueClr,
-          //     onChanged: (bool value) {
-          //       setState(() {
-          //         ThemeService().switchTheme();
-          //       });
-          //       setState(() {});
-          //     },
-          //   ),
-          // ),
-          //     Text(
-          //       'Dark',
-          //       style: bold.copyWith(
-          //           fontSize: 16,
-          //           color: Get.isDarkMode ? Colors.white : Colors.grey),
-          //     ),
-          //   ],
-          // ),
         ],
       ),
     );
