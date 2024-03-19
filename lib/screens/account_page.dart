@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:periods/themes/text_styles.dart';
 
-class CalenderPage extends StatefulWidget {
-  const CalenderPage({super.key});
+class AccountPage extends StatefulWidget {
+  const AccountPage({super.key});
 
   @override
-  State<CalenderPage> createState() => _CalenderPageState();
+  State<AccountPage> createState() => _AccountPageState();
 }
 
-class _CalenderPageState extends State<CalenderPage> {
+class _AccountPageState extends State<AccountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,9 +17,11 @@ class _CalenderPageState extends State<CalenderPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Your Calender',
-          style: bold.copyWith(fontSize: 38),
-        )
+          'data',
+          style: bold.copyWith(
+            fontSize: 38,
+          ),
+        ),
       ],
     ));
   }

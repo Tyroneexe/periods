@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:periods/navbar/bar_controller.dart';
+import 'package:periods/screens/account_page.dart';
+import 'package:periods/screens/calender_page.dart';
 import 'package:periods/screens/home_page.dart';
 import 'package:periods/themes/colors.dart';
 
@@ -23,7 +25,7 @@ class _NavBarState extends State<NavBar> {
         return Scaffold(
           body: IndexedStack(
             index: controller.tabIndex,
-            children: const [HomePage(), HomePage(), HomePage()],
+            children: const [HomePage(), CalenderPage(), AccountPage()],
           ),
           bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
@@ -45,12 +47,12 @@ class _NavBarState extends State<NavBar> {
                 26,
               ),
               _bottombarItem(
-                Icons.search_rounded,
+                Icons.calendar_view_month_rounded,
                 "",
                 26,
               ),
               _bottombarItem(
-                Icons.search_rounded,
+                Icons.person,
                 "",
                 26,
               ),

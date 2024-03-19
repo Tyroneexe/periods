@@ -135,9 +135,10 @@ class _NavitionDrawerState extends State<NavitionDrawer> {
             padding: const EdgeInsets.only(left: 5),
             child: ListTile(
                 contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-                leading: const Icon(Icons.person, size: 30, color: primaryClr),
+                leading: const Icon(Icons.calendar_view_month_rounded,
+                    size: 30, color: primaryClr),
                 title: Text(
-                  'Account',
+                  'Your TimeTable',
                   style: bold.copyWith(
                     fontSize: 16,
                   ),
@@ -319,42 +320,6 @@ class _NavitionDrawerState extends State<NavitionDrawer> {
           //     ),
           //   ],
           // ),
-          const Spacer(),
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            child: TextButton(
-              onPressed: () {
-                //
-              },
-              style: ButtonStyle(
-                textStyle: MaterialStateProperty.all<TextStyle>(bold.copyWith(
-                  fontSize: 14,
-                  color: Colors.white,
-                )),
-                foregroundColor: MaterialStateProperty.all<Color>(
-                  Colors.white,
-                ),
-                backgroundColor: MaterialStateProperty.all<Color>(
-                  primaryClr,
-                ),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                ),
-                minimumSize: MaterialStateProperty.all<Size>(
-                  Size(
-                    MediaQuery.of(context).size.width,
-                    38,
-                  ),
-                ),
-              ),
-              child: const Text('Log Out'),
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
         ],
       ),
     );
