@@ -53,12 +53,12 @@ class _LogInPageState extends State<LogInPage> {
                   ),
                   hintText: 'What would you like to be called?',
                   labelText: 'Name or User Name',
-                  labelStyle: regular.copyWith(
+                  labelStyle: regularFont.copyWith(
                     color: const Color(
                       0xFFC6CEDD,
                     ),
                   ),
-                  hintStyle: regular.copyWith(
+                  hintStyle: regularFont.copyWith(
                     color: const Color(
                       0xFFC6CEDD,
                     ),
@@ -100,10 +100,10 @@ class _LogInPageState extends State<LogInPage> {
                   ),
                   hintText: 'Your Type of School',
                   labelText: 'Type of School',
-                  labelStyle: regular.copyWith(
+                  labelStyle: regularFont.copyWith(
                     color: const Color(0xFFC6CEDD),
                   ),
-                  hintStyle: regular.copyWith(
+                  hintStyle: regularFont.copyWith(
                     color: const Color(0xFFC6CEDD),
                   ),
                   focusColor: primaryClr,
@@ -149,7 +149,7 @@ class _LogInPageState extends State<LogInPage> {
                           ),
                           content: Text(
                             "Please fill in fields",
-                            style: regular,
+                            style: regularFont,
                           ),
                           actions: <Widget>[
                             TextButton(

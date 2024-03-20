@@ -116,7 +116,7 @@ class CustomNavBarIcon extends StatelessWidget {
         Icon(
           iconData,
           color: isSelected
-              ? (selectedColor ?? themeData.primaryColor)
+              ? (selectedColor ?? primaryClr)
               : (color ?? themeData.iconTheme.color),
         ),
         if (isSelected)

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
+import 'package:periods/screens/add_task_page.dart';
 import 'package:periods/screens/home_page.dart';
 import 'package:periods/themes/text_styles.dart';
 
@@ -96,7 +97,7 @@ class _AccountPageState extends State<AccountPage> {
             Center(
               child: Text(
                 'Student',
-                style: regular.copyWith(
+                style: regularFont.copyWith(
                   fontSize: 14,
                   color: const Color(
                     0xFF10275A,
@@ -107,246 +108,259 @@ class _AccountPageState extends State<AccountPage> {
             const SizedBox(
               height: 20,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  height: 160,
-                  width: (MediaQuery.of(context).size.width / 2) - 30,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF858FE9).withOpacity(0.25),
-                    borderRadius: BorderRadius.circular(
-                      14,
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Container(
-                        height: 60,
-                        width: 60,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF858FE9),
-                          borderRadius: BorderRadius.circular(
-                            14,
-                          ),
-                        ),
-                        child: const Icon(
-                          IconlyLight.profile,
-                          color: Colors.white,
-                          size: 28,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'My Time Table',
-                        style: medium.copyWith(
-                          fontSize: 14,
-                          color: const Color(
-                            0xFF10275A,
-                          ),
-                        ),
-                      ),
-                      Text(
-                        'Task',
-                        style: medium.copyWith(
-                          fontSize: 12,
-                          color: const Color(
-                            0xFF12175D,
-                          ).withOpacity(0.5),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const Spacer(),
-                Container(
-                  height: 160,
-                  width: (MediaQuery.of(context).size.width / 2) - 30,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF7FC9E7).withOpacity(0.25),
-                    borderRadius: BorderRadius.circular(
-                      14,
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Container(
-                        height: 60,
-                        width: 60,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF7FC9E7),
-                          borderRadius: BorderRadius.circular(
-                            14,
-                          ),
-                        ),
-                        child: const Icon(
-                          IconlyLight.work,
-                          color: Colors.white,
-                          size: 28,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Homework',
-                        style: medium.copyWith(
-                          fontSize: 14,
-                          color: const Color(
-                            0xFF10275A,
-                          ),
-                        ),
-                      ),
-                      Text(
-                        'Task',
-                        style: medium.copyWith(
-                          fontSize: 12,
-                          color: const Color(
-                            0xFF393939,
-                          ).withOpacity(0.5),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+            _taskBoxes1(),
             const SizedBox(
               height: 10,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  height: 160,
-                  width: (MediaQuery.of(context).size.width / 2) - 30,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF81E89E).withOpacity(0.25),
-                    borderRadius: BorderRadius.circular(
-                      14,
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Container(
-                        height: 60,
-                        width: 60,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF81E89E),
-                          borderRadius: BorderRadius.circular(
-                            14,
-                          ),
-                        ),
-                        child: const Icon(
-                          IconlyLight.calendar,
-                          color: Colors.white,
-                          size: 28,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Switch Day',
-                        style: medium.copyWith(
-                          fontSize: 14,
-                          color: const Color(
-                            0xFF10275A,
-                          ),
-                        ),
-                      ),
-                      Text(
-                        'Task',
-                        style: medium.copyWith(
-                          fontSize: 12,
-                          color: const Color(
-                            0xFF393939,
-                          ).withOpacity(0.5),
-                        ),
-                      ),
-                    ],
+            _taskBoxes2(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _taskBoxes1() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          height: 160,
+          width: (MediaQuery.of(context).size.width / 2) - 30,
+          decoration: BoxDecoration(
+            color: const Color(0xFF858FE9).withOpacity(0.25),
+            borderRadius: BorderRadius.circular(
+              14,
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 30,
+              ),
+              Container(
+                height: 60,
+                width: 60,
+                decoration: BoxDecoration(
+                  color: const Color(0xFF858FE9),
+                  borderRadius: BorderRadius.circular(
+                    14,
                   ),
                 ),
-                const Spacer(),
+                child: const Icon(
+                  IconlyLight.profile,
+                  color: Colors.white,
+                  size: 28,
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                'My Time Table',
+                style: medium.copyWith(
+                  fontSize: 14,
+                  color: const Color(
+                    0xFF10275A,
+                  ),
+                ),
+              ),
+              Text(
+                'Task',
+                style: medium.copyWith(
+                  fontSize: 12,
+                  color: const Color(
+                    0xFF12175D,
+                  ).withOpacity(0.5),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const Spacer(),
+        Container(
+          height: 160,
+          width: (MediaQuery.of(context).size.width / 2) - 30,
+          decoration: BoxDecoration(
+            color: const Color(0xFF7FC9E7).withOpacity(0.25),
+            borderRadius: BorderRadius.circular(
+              14,
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 30,
+              ),
+              Container(
+                height: 60,
+                width: 60,
+                decoration: BoxDecoration(
+                  color: const Color(0xFF7FC9E7),
+                  borderRadius: BorderRadius.circular(
+                    14,
+                  ),
+                ),
+                child: const Icon(
+                  IconlyLight.work,
+                  color: Colors.white,
+                  size: 28,
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Homework',
+                style: medium.copyWith(
+                  fontSize: 14,
+                  color: const Color(
+                    0xFF10275A,
+                  ),
+                ),
+              ),
+              Text(
+                'Task',
+                style: medium.copyWith(
+                  fontSize: 12,
+                  color: const Color(
+                    0xFF393939,
+                  ).withOpacity(0.5),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  _taskBoxes2() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          height: 160,
+          width: (MediaQuery.of(context).size.width / 2) - 30,
+          decoration: BoxDecoration(
+            color: const Color(0xFF81E89E).withOpacity(0.25),
+            borderRadius: BorderRadius.circular(
+              14,
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 30,
+              ),
+              Container(
+                height: 60,
+                width: 60,
+                decoration: BoxDecoration(
+                  color: const Color(0xFF81E89E),
+                  borderRadius: BorderRadius.circular(
+                    14,
+                  ),
+                ),
+                child: const Icon(
+                  IconlyLight.calendar,
+                  color: Colors.white,
+                  size: 28,
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Switch Day',
+                style: medium.copyWith(
+                  fontSize: 14,
+                  color: const Color(
+                    0xFF10275A,
+                  ),
+                ),
+              ),
+              Text(
+                'Task',
+                style: medium.copyWith(
+                  fontSize: 12,
+                  color: const Color(
+                    0xFF393939,
+                  ).withOpacity(0.5),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const Spacer(),
+        GestureDetector(
+          onTap: () {
+            Get.to(() => const AddTaskPage());
+          },
+          child: Container(
+            height: 160,
+            width: (MediaQuery.of(context).size.width / 2) - 30,
+            decoration: BoxDecoration(
+              color: const Color(0xFFF0A58E).withOpacity(0.25),
+              borderRadius: BorderRadius.circular(
+                14,
+              ),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  height: 30,
+                ),
                 Container(
-                  height: 160,
-                  width: (MediaQuery.of(context).size.width / 2) - 30,
+                  height: 60,
+                  width: 60,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF0A58E).withOpacity(0.25),
+                    color: const Color(0xFFF0A58E),
                     borderRadius: BorderRadius.circular(
                       14,
                     ),
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Container(
-                        height: 60,
-                        width: 60,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFF0A58E),
-                          borderRadius: BorderRadius.circular(
-                            14,
-                          ),
-                        ),
-                        child: const Icon(
-                          IconlyLight.plus,
-                          color: Colors.white,
-                          size: 28,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Create Time Table',
-                        style: medium.copyWith(
-                          fontSize: 14,
-                          color: const Color(
-                            0xFF10275A,
-                          ),
-                        ),
-                      ),
-                      Text(
-                        'Task',
-                        style: medium.copyWith(
-                          fontSize: 12,
-                          color: const Color(
-                            0xFF393939,
-                          ).withOpacity(0.5),
-                        ),
-                      ),
-                    ],
+                  child: const Icon(
+                    IconlyLight.plus,
+                    color: Colors.white,
+                    size: 28,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  'Create Time Table',
+                  style: medium.copyWith(
+                    fontSize: 14,
+                    color: const Color(
+                      0xFF10275A,
+                    ),
+                  ),
+                ),
+                Text(
+                  'Task',
+                  style: medium.copyWith(
+                    fontSize: 12,
+                    color: const Color(
+                      0xFF393939,
+                    ).withOpacity(0.5),
                   ),
                 ),
               ],
             ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }

@@ -7,7 +7,6 @@ import 'package:periods/screens/calender_page.dart';
 import 'package:periods/themes/text_styles.dart';
 
 /*
-Account page
 insert time table
 home page kla maak
 task page
@@ -81,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                   },
                   child: Text(
                     'View all',
-                    style: regular.copyWith(
+                    style: regularFont.copyWith(
                       fontSize: 12,
                       color: const Color(
                         0xFF393F93,
@@ -166,7 +165,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         Text(
                           'Tasks',
-                          style: regular.copyWith(
+                          style: regularFont.copyWith(
                             fontSize: 14,
                             color: const Color(
                               0xFF12175E,
@@ -243,7 +242,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         Text(
                           'Tasks',
-                          style: regular.copyWith(
+                          style: regularFont.copyWith(
                             fontSize: 14,
                             color: Colors.white,
                           ),
@@ -321,7 +320,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         Text(
                           'Tasks',
-                          style: regular.copyWith(
+                          style: regularFont.copyWith(
                             fontSize: 14,
                             color: Colors.white,
                           ),
@@ -392,7 +391,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         Text(
                           'Tasks',
-                          style: regular.copyWith(
+                          style: regularFont.copyWith(
                             fontSize: 14,
                             color: const Color(
                               0xFF12175E,
@@ -429,7 +428,7 @@ class _HomePageState extends State<HomePage> {
             ),
             Text(
               "Let's check your time table",
-              style: regular.copyWith(
+              style: regularFont.copyWith(
                 fontSize: 16,
                 color: const Color(
                   0xFF575757,

@@ -69,7 +69,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 Center(
                   child: Text(
                     'Get notified about your upcoming periods\nfor the day and much more',
-                    style: regular,
+                    style: regularFont,
                     textAlign: TextAlign.center,
                   ),
                 ),

@@ -15,7 +15,7 @@ TextStyle get semiBold {
   );
 }
 
-TextStyle get regular {
+TextStyle get regularFont{
   return GoogleFonts.hindSiliguri(
     fontWeight: FontWeight.w400,
     color: Colors.black,
