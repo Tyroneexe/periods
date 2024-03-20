@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:periods/screens/login_page.dart';
-import 'package:periods/screens/home_page.dart';
+import 'package:periods/navbar/navbar.dart';
+import 'package:periods/screens/splash_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,9 +31,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Periods',
       debugShowCheckedModeBanner: false,
-      home: isLoggedIn
-          ? const HomePage()
-          : const LogInPage(), // Conditional initial route
+      home: isLoggedIn ? const NavBar() : const SplashScreen(),
     );
   }
 }
