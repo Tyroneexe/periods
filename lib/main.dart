@@ -13,12 +13,27 @@ Future<void> main() async {
   Hive.init(appDocumentDir.path);
   await Hive.openBox('userSettings');
 
+  // await Hive.box('userSettings').clear();
+
   //Open storage and check if user is logged in
   var box = Hive.box('userSettings');
   String? loadedUsername = box.get('username');
   bool isLoggedIn = loadedUsername != null;
 
+  printEntireHiveBox();
+
   runApp(MyApp(isLoggedIn: isLoggedIn));
+}
+
+//! Remove
+void printEntireHiveBox() {
+  final box = Hive.box('userSettings');
+
+  for (var key in box.keys) {
+    var value = box.get(key);
+    // ignore: avoid_print
+    print('Key: $key, Value: $value');
+  }
 }
 
 class MyApp extends StatelessWidget {

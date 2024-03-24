@@ -15,6 +15,13 @@ TextStyle get semiBold {
   );
 }
 
+TextStyle get medium {
+  return GoogleFonts.hindSiliguri(
+    fontWeight: FontWeight.w500,
+    color: Colors.black,
+  );
+}
+
 TextStyle get regularFont{
   return GoogleFonts.hindSiliguri(
     fontWeight: FontWeight.w400,
@@ -22,9 +29,3 @@ TextStyle get regularFont{
   );
 }
 
-TextStyle get medium {
-  return GoogleFonts.hindSiliguri(
-    fontWeight: FontWeight.w500,
-    color: Colors.black,
-  );
-}
