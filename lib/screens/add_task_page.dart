@@ -592,9 +592,4 @@ class _PeriodsDialogState extends State<PeriodsDialog> {
     var box = Hive.box('userSettings');
     await box.put(day, periods);
   }
-
-  // List<String>? getUserActivity(int day) {
-  //   var box = Hive.box('userSettings');
-  //   return box.get(day)?.cast<String>();
-  // }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 import 'package:periods/navbar/bar_controller.dart';
-import 'package:periods/screens/about_us.dart';
+import 'package:periods/screens/notepad_page.dart';
 import 'package:periods/screens/account_page.dart';
 import 'package:periods/screens/calender_page.dart';
 import 'package:periods/screens/home_page.dart';
@@ -28,7 +28,7 @@ class _NavBarState extends State<NavBar> {
             children: const [
               HomePage(),
               CalenderPage(),
-              AboutUs(),
+              NotepadPage(),
               AccountPage(),
             ],
           ),
