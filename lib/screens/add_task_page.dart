@@ -292,6 +292,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
                           );
                         });
                   } else {
+                    dayController.text = '';
+                    numPeriodsController.text = '';
                     Get.back();
                   }
                 },
@@ -497,16 +499,27 @@ class PeriodsDialog extends StatefulWidget {
   const PeriodsDialog({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _PeriodsDialogState createState() => _PeriodsDialogState();
+  State<PeriodsDialog> createState() => _PeriodsDialogState();
 }
 
 class _PeriodsDialogState extends State<PeriodsDialog> {
-  final List<TextEditingController> _controllers =
-      List.generate(8, (i) => TextEditingController());
+  late List<TextEditingController> _controllers;
+  late int numPeriods;
+
+  @override
+  void initState() {
+    super.initState();
+
+    numPeriods = int.parse(numPeriodsController.text);
+
+    numPeriods = numPeriods > 10 ? 10 : numPeriods;
+
+    _controllers = List.generate(numPeriods, (i) => TextEditingController());
+  }
 
   @override
   void dispose() {
+    // Dispose of all TextEditingController instances
     for (var controller in _controllers) {
       controller.dispose();
     }
@@ -526,7 +539,7 @@ class _PeriodsDialogState extends State<PeriodsDialog> {
       content: SingleChildScrollView(
         child: ListBody(
           children: [
-            for (int i = 0; i < int.parse(numPeriodsController.text); i++)
+            for (int i = 0; i < _controllers.length; i++)
               TextFormField(
                 controller: _controllers[i],
                 autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -537,11 +550,11 @@ class _PeriodsDialogState extends State<PeriodsDialog> {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a value';
                   }
-
                   return null;
                 },
                 onFieldSubmitted: (String value) {
                   if (value.isNotEmpty) {
+                    // Assuming classes is defined elsewhere and accessible.
                     classes.add(_controllers[i].text);
                   }
                 },

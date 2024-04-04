@@ -17,6 +17,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   google_fonts: ^6.2.1
   iconly: ^1.0.1
+  date_picker_timeline: ^1.2.6
 
   #State Management
   get: ^4.6.6
@@ -24,7 +25,6 @@ dependencies:
   #Storage
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  path_provider: ^2.1.2
 
 dev_dependencies:
   flutter_test:
