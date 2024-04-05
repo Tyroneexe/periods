@@ -2,6 +2,7 @@ import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:iconly/iconly.dart';
 import 'package:periods/themes/colors.dart';
@@ -59,6 +60,9 @@ class _CalenderPageState extends State<CalenderPage> {
               height: 90,
               selectionColor: primaryClr,
               dateTextStyle: medium.copyWith(fontSize: 16),
+              activeDates: [
+                DateTime.now(),
+              ],
             ),
             const SizedBox(
               height: 30,
@@ -96,24 +100,127 @@ class _CalenderPageState extends State<CalenderPage> {
               ),
               thickness: 1,
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: items.length, // The number of items in the list
-                itemBuilder: (context, index) {
-                  return Container(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(items[index],
-                        style: TextStyle(
-                            fontSize: 18)), // Display each item in a container
-                  );
-                },
-              ),
-            )
+            _periodList(),
           ],
         ),
+      ),
+    );
+  }
+
+  _periodList() {
+    return Expanded(
+      child: ListView.builder(
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          Color backgroundColor;
+          switch (index % 3) {
+            case 0:
+              backgroundColor = primaryClr;
+              break;
+            case 1:
+              backgroundColor = accentClr;
+              break;
+            case 2:
+            default:
+              backgroundColor = secondaryClr;
+              break;
+          }
+
+          String periodSuffix(int number) {
+            int tens = number % 100;
+            if (tens >= 11 && tens <= 13) {
+              return 'th';
+            }
+            switch (number % 10) {
+              case 1:
+                return 'st';
+              case 2:
+                return 'nd';
+              case 3:
+                return 'rd';
+              default:
+                return 'th';
+            }
+          }
+
+          return Padding(
+            padding: const EdgeInsets.only(
+              top: 10,
+            ),
+            child: Container(
+              height: 60,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(14),
+                color: const Color(
+                  0xFFF9FAFD,
+                ),
+              ),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 15,
+                      right: 10,
+                      top: 10,
+                      bottom: 10,
+                    ),
+                    child: Container(
+                      width: 3,
+                      decoration: BoxDecoration(
+                        color: backgroundColor,
+                        borderRadius: BorderRadius.circular(
+                          3,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        (items[index]).toUpperCase(),
+                        style: medium.copyWith(
+                          fontSize: 16,
+                          color: const Color(
+                            0xFF2C406E,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        "${index + 1}${periodSuffix(index + 1)} Period",
+                        style: regularFont.copyWith(
+                          fontSize: 14,
+                          color: const Color(
+                            0xFF9AA8C7,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: () {
+                      //
+                    },
+                    child: const Icon(
+                      Icons.more_vert,
+                      color: Colors.black,
+                      size: 16,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
