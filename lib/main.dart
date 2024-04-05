@@ -19,11 +19,14 @@ Future<void> main() async {
   var box = Hive.box('userSettings');
   String? loadedUsername = box.get('username');
   bool isLoggedIn = loadedUsername != null;
+  updateDayCounter();
 
   printEntireHiveBox();
 
   runApp(MyApp(isLoggedIn: isLoggedIn));
 }
+
+int dayCounter = 1;
 
 //! Remove
 void printEntireHiveBox() {
@@ -33,6 +36,29 @@ void printEntireHiveBox() {
     var value = box.get(key);
     // ignore: avoid_print
     print('Key: $key, Value: $value');
+  }
+}
+
+Future<void> updateDayCounter() async {
+  var box = Hive.box('userSettings');
+  DateTime now = DateTime.now();
+  DateTime lastUpdated =
+      box.get('lastUpdated', defaultValue: DateTime.now()) as DateTime;
+  dayCounter = box.get('Day', defaultValue: 1) as int;
+
+  if (dayCounter > 6) {
+    dayCounter = 1;
+  }
+
+  if (now.year != lastUpdated.year ||
+      now.month != lastUpdated.month ||
+      now.day != lastUpdated.day) {
+    dayCounter = dayCounter + 1;
+    await box.put('Day', dayCounter);
+    await box.put(
+      'lastUpdated',
+      DateTime(now.year, now.month, now.day),
+    );
   }
 }
 

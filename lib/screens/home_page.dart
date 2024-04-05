@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:iconly/iconly.dart';
+import 'package:periods/main.dart';
 import 'package:periods/screens/account_page.dart';
 import 'package:periods/screens/calender_page.dart';
 import 'package:periods/themes/colors.dart';
@@ -67,7 +68,7 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'Today: Day 1',
+                  'Today: Day $dayCounter',
                   style: semiBold.copyWith(
                     fontSize: 24,
                     color: const Color(
@@ -592,7 +593,7 @@ class _HomePageState extends State<HomePage> {
       username = loadedUsername!;
     });
 
-    var storedItems = box.get(1);
+    var storedItems = box.get(dayCounter);
     if (storedItems != null) {
       setState(() {
         items = List<String>.from(storedItems);

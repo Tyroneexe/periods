@@ -264,33 +264,34 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   if (dayController.text.isEmpty ||
                       numPeriodsController.text.isEmpty) {
                     showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text(
-                              "Missing Information",
-                              style: semiBold,
-                            ),
-                            content: Text(
-                              "Please fill in fields",
-                              style: regularFont,
-                            ),
-                            actions: <Widget>[
-                              TextButton(
-                                child: Text(
-                                  "OK",
-                                  style: bold.copyWith(
-                                    color: primaryClr,
-                                    fontSize: 16,
-                                  ),
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text(
+                            "Missing Information",
+                            style: semiBold,
+                          ),
+                          content: Text(
+                            "Please fill in fields",
+                            style: regularFont,
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              child: Text(
+                                "OK",
+                                style: bold.copyWith(
+                                  color: primaryClr,
+                                  fontSize: 16,
                                 ),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
                               ),
-                            ],
-                          );
-                        });
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   } else {
                     dayController.text = '';
                     numPeriodsController.text = '';

@@ -2,6 +2,7 @@ import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
+import 'package:periods/main.dart';
 import 'package:periods/screens/home_page.dart';
 import 'package:periods/themes/colors.dart';
 import 'package:periods/themes/text_styles.dart';
@@ -61,7 +62,7 @@ class _CalenderPageState extends State<CalenderPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'Day 1',
+                  'Day $dayCounter',
                   style: semiBold.copyWith(
                     color: const Color(
                       0xFF10275A,
