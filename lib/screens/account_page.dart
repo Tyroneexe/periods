@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 import 'package:periods/screens/add_task_page.dart';
