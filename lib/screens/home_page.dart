@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:iconly/iconly.dart';
 import 'package:periods/screens/account_page.dart';
 import 'package:periods/screens/calender_page.dart';
+import 'package:periods/themes/colors.dart';
 import 'package:periods/themes/text_styles.dart';
 
 /*
@@ -20,6 +21,7 @@ class HomePage extends StatefulWidget {
 }
 
 String username = 'Guest';
+List<String> items = [];
 
 class _HomePageState extends State<HomePage> {
   @override
@@ -90,11 +92,127 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            _periodList(),
           ],
         ),
+      ),
+    );
+  }
+
+  _periodList() {
+    return Expanded(
+      child: ListView.builder(
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          Color backgroundColor;
+          switch (index % 3) {
+            case 0:
+              backgroundColor = primaryClr;
+              break;
+            case 1:
+              backgroundColor = accentClr;
+              break;
+            case 2:
+            default:
+              backgroundColor = secondaryClr;
+              break;
+          }
+
+          String periodSuffix(int number) {
+            int tens = number % 100;
+            if (tens >= 11 && tens <= 13) {
+              return 'th';
+            }
+            switch (number % 10) {
+              case 1:
+                return 'st';
+              case 2:
+                return 'nd';
+              case 3:
+                return 'rd';
+              default:
+                return 'th';
+            }
+          }
+
+          return Padding(
+            padding: const EdgeInsets.only(
+              top: 10,
+            ),
+            child: Container(
+              height: 60,
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(14),
+                color: const Color(
+                  0xFFF9FAFD,
+                ),
+              ),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 15,
+                      right: 10,
+                      top: 10,
+                      bottom: 10,
+                    ),
+                    child: Container(
+                      width: 3,
+                      decoration: BoxDecoration(
+                        color: backgroundColor,
+                        borderRadius: BorderRadius.circular(
+                          3,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        (items[index]).toUpperCase(),
+                        style: medium.copyWith(
+                          fontSize: 16,
+                          color: const Color(
+                            0xFF2C406E,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        "${index + 1}${periodSuffix(index + 1)} Period",
+                        style: regularFont.copyWith(
+                          fontSize: 14,
+                          color: const Color(
+                            0xFF9AA8C7,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: () {
+                      //
+                    },
+                    child: const Icon(
+                      Icons.more_vert,
+                      color: Colors.black,
+                      size: 16,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -473,5 +591,12 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       username = loadedUsername!;
     });
+
+    var storedItems = box.get(1);
+    if (storedItems != null) {
+      setState(() {
+        items = List<String>.from(storedItems);
+      });
+    }
   }
 }

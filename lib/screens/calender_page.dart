@@ -1,10 +1,8 @@
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 import 'package:iconly/iconly.dart';
+import 'package:periods/screens/home_page.dart';
 import 'package:periods/themes/colors.dart';
 import 'package:periods/themes/text_styles.dart';
 
@@ -18,13 +16,6 @@ class CalenderPage extends StatefulWidget {
 class _CalenderPageState extends State<CalenderPage> {
   DatePickerController dateController = DatePickerController();
   TextEditingController searchController = TextEditingController();
-  List<String> items = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _loadItems();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +51,7 @@ class _CalenderPageState extends State<CalenderPage> {
               height: 90,
               selectionColor: primaryClr,
               dateTextStyle: medium.copyWith(fontSize: 16),
-              activeDates: [
-                DateTime.now(),
-              ],
+              initialSelectedDate: DateTime.now(),
             ),
             const SizedBox(
               height: 30,
@@ -282,15 +271,5 @@ class _CalenderPageState extends State<CalenderPage> {
         ),
       ),
     );
-  }
-
-  void _loadItems() {
-    var box = Hive.box('userSettings');
-    var storedItems = box.get(1);
-    if (storedItems != null) {
-      setState(() {
-        items = List<String>.from(storedItems);
-      });
-    }
   }
 }
