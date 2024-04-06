@@ -564,6 +564,19 @@ class _HomePageState extends State<HomePage> {
     if (newDay != null) {
       await box.put('Day', newDay);
       await box.put('lastUpdated', DateTime.now());
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: CustomSnackbar(
+            title: 'Changed Day',
+            subTitle: 'You have changed day to $newDay',
+            color: primaryClr,
+          ),
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+      );
     }
   }
 
@@ -618,18 +631,6 @@ class _HomePageState extends State<HomePage> {
               ),
               onPressed: () {
                 Navigator.of(context).pop(selectedDay);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: CustomSnackbar(
-                      title: 'Changed Day',
-                      subTitle: 'You have changed day to $newDay',
-                      color: primaryClr,
-                    ),
-                    behavior: SnackBarBehavior.floating,
-                    backgroundColor: Colors.transparent,
-                    elevation: 0,
-                  ),
-                );
               },
             ),
           ],

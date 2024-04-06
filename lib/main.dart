@@ -19,10 +19,11 @@ Future<void> main() async {
   var box = Hive.box('userSettings');
   String? loadedUsername = box.get('username');
   bool isLoggedIn = loadedUsername != null;
+
   updateDayCounter();
+  totalDays = countCalendarDays();
 
   printEntireHiveBox();
-  totalDays = countCalendarDays();
 
   runApp(MyApp(isLoggedIn: isLoggedIn));
 }
