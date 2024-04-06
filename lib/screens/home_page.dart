@@ -1,21 +1,21 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:iconly/iconly.dart';
 import 'package:periods/main.dart';
 import 'package:periods/screens/account_page.dart';
 import 'package:periods/screens/calender_page.dart';
+import 'package:periods/screens/stats/completed_page.dart';
+import 'package:periods/screens/stats/pending_page.dart';
 import 'package:periods/themes/colors.dart';
 import 'package:periods/themes/text_styles.dart';
 
 /*
 
-  Search bar in calender page
-  snackbar for when the day is changed or day is added
   4 Boxes in home page just shows information about your days
-  Settings page
   Update state so that the app is dynamic 
-    (Change day then the home page and calender page should change day)
   Notification System
   
 */
@@ -144,7 +144,7 @@ class _HomePageState extends State<HomePage> {
 
           return Padding(
             padding: const EdgeInsets.only(
-              top: 10,
+              bottom: 10,
             ),
             child: Container(
               height: 60,
@@ -235,7 +235,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             GestureDetector(
               onTap: () {
-                //
+                Get.to(() => const CompletedPage());
               },
               child: Container(
                 height: 150,
@@ -392,146 +392,156 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              height: 120,
-              width: (MediaQuery.of(context).size.width / 2) - 28,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                  14,
+            GestureDetector(
+              onTap: () {
+                //
+              },
+              child: Container(
+                height: 120,
+                width: (MediaQuery.of(context).size.width / 2) - 28,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    14,
+                  ),
+                  gradient: const LinearGradient(
+                    begin: Alignment.bottomLeft,
+                    end: Alignment.topRight,
+                    colors: [Color(0xFF7D88E7), Color(0xFF99A1F2)],
+                  ),
                 ),
-                gradient: const LinearGradient(
-                  begin: Alignment.bottomLeft,
-                  end: Alignment.topRight,
-                  colors: [Color(0xFF7D88E7), Color(0xFF99A1F2)],
+                child: Stack(
+                  children: [
+                    Positioned(
+                      top: 0,
+                      right: 20,
+                      child: Row(
+                        children: [
+                          Image.asset('assets/purArrow.png'),
+                          const SizedBox(width: 7),
+                          Image.asset('assets/purArrow.png'),
+                        ],
+                      ),
+                    ),
+                    const Positioned(
+                      top: 10,
+                      right: 10,
+                      child: Icon(
+                        IconlyLight.arrow_right,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(top: 15, bottom: 10),
+                            child: Icon(
+                              IconlyLight.time_square,
+                              color: Colors.white,
+                              size: 32,
+                            ),
+                          ),
+                          Text(
+                            'Pending',
+                            style: medium.copyWith(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Text(
+                            'Tasks',
+                            style: regularFont.copyWith(
+                              fontSize: 14,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              child: Stack(
-                children: [
-                  Positioned(
-                    top: 0,
-                    right: 20,
-                    child: Row(
-                      children: [
-                        Image.asset('assets/purArrow.png'),
-                        const SizedBox(width: 7),
-                        Image.asset('assets/purArrow.png'),
-                      ],
-                    ),
-                  ),
-                  const Positioned(
-                    top: 10,
-                    right: 10,
-                    child: Icon(
-                      IconlyLight.arrow_right,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(top: 15, bottom: 10),
-                          child: Icon(
-                            IconlyLight.time_square,
-                            color: Colors.white,
-                            size: 32,
-                          ),
-                        ),
-                        Text(
-                          'Pending',
-                          style: medium.copyWith(
-                            fontSize: 16,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Text(
-                          'Tasks',
-                          style: regularFont.copyWith(
-                            fontSize: 14,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
               ),
             ),
             const SizedBox(
               height: 5,
             ),
-            Container(
-              height: 150,
-              width: (MediaQuery.of(context).size.width / 2) - 28,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(14),
-                gradient: const LinearGradient(
-                  begin: Alignment.bottomLeft,
-                  end: Alignment.topRight,
-                  colors: [
-                    Color(0xFF81E89E),
-                    Color(0xFFC4FACD),
+            GestureDetector(
+              onTap: () {
+                Get.to(() => const OnGoingPage());
+              },
+              child: Container(
+                height: 150,
+                width: (MediaQuery.of(context).size.width / 2) - 28,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(14),
+                  gradient: const LinearGradient(
+                    begin: Alignment.bottomLeft,
+                    end: Alignment.topRight,
+                    colors: [
+                      Color(0xFF81E89E),
+                      Color(0xFFC4FACD),
+                    ],
+                  ),
+                ),
+                child: Stack(
+                  children: [
+                    Positioned(
+                      top: 0,
+                      right: 20,
+                      child: Row(
+                        children: [
+                          Image.asset('assets/greenArrow.png'),
+                          const SizedBox(width: 7),
+                          Image.asset('assets/greenArrow.png'),
+                        ],
+                      ),
+                    ),
+                    const Positioned(
+                      top: 10,
+                      right: 10,
+                      child: Icon(
+                        IconlyLight.arrow_right,
+                        color: Color(0xFF12175E),
+                        size: 20,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image.asset(
+                            'assets/Folder.png',
+                            height: 90,
+                          ),
+                          Text(
+                            'On Going',
+                            style: medium.copyWith(
+                              fontSize: 16,
+                              color: const Color(
+                                0xFF12175E,
+                              ),
+                            ),
+                          ),
+                          Text(
+                            'Tasks',
+                            style: regularFont.copyWith(
+                              fontSize: 14,
+                              color: const Color(
+                                0xFF12175E,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-              ),
-              child: Stack(
-                children: [
-                  Positioned(
-                    top: 0,
-                    right: 20,
-                    child: Row(
-                      children: [
-                        Image.asset('assets/greenArrow.png'),
-                        const SizedBox(width: 7),
-                        Image.asset('assets/greenArrow.png'),
-                      ],
-                    ),
-                  ),
-                  const Positioned(
-                    top: 10,
-                    right: 10,
-                    child: Icon(
-                      IconlyLight.arrow_right,
-                      color: Color(0xFF12175E),
-                      size: 20,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.asset(
-                          'assets/Folder.png',
-                          height: 90,
-                        ),
-                        Text(
-                          'On Going',
-                          style: medium.copyWith(
-                            fontSize: 16,
-                            color: const Color(
-                              0xFF12175E,
-                            ),
-                          ),
-                        ),
-                        Text(
-                          'Tasks',
-                          style: regularFont.copyWith(
-                            fontSize: 14,
-                            color: const Color(
-                              0xFF12175E,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
               ),
             ),
           ],

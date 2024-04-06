@@ -174,9 +174,14 @@ class _CalenderPageState extends State<CalenderPage> {
   }
 
   _periodList() {
+    var filteredItems = items
+        .where((item) =>
+            item.toLowerCase().contains(searchController.text.toLowerCase()))
+        .toList();
+
     return Expanded(
       child: ListView.builder(
-        itemCount: items.length,
+        itemCount: filteredItems.length,
         itemBuilder: (context, index) {
           Color backgroundColor;
           switch (index % 3) {
@@ -211,7 +216,7 @@ class _CalenderPageState extends State<CalenderPage> {
 
           return Padding(
             padding: const EdgeInsets.only(
-              top: 10,
+              bottom: 10,
             ),
             child: Container(
               height: 60,
@@ -249,7 +254,7 @@ class _CalenderPageState extends State<CalenderPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        (items[index]).toUpperCase(),
+                        filteredItems[index].toUpperCase(),
                         style: medium.copyWith(
                           fontSize: 16,
                           color: const Color(
@@ -294,6 +299,9 @@ class _CalenderPageState extends State<CalenderPage> {
   _searchBar() {
     return TextFormField(
       controller: searchController,
+      onChanged: (value) {
+        setState(() {});
+      },
       decoration: InputDecoration(
         filled: true,
         fillColor: const Color(
