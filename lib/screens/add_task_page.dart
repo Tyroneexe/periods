@@ -295,7 +295,6 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   } else {
                     dayController.text = '';
                     numPeriodsController.text = '';
-                    Get.back();
                   }
                 },
                 style: ButtonStyle(

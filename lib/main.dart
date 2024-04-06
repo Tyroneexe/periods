@@ -15,8 +15,6 @@ Future<void> main() async {
   Hive.init(appDocumentDir.path);
   await Hive.openBox('userSettings');
 
-  // await Hive.box('userSettings').clear();
-
   //Open storage and check if user is logged in
   var box = Hive.box('userSettings');
   String? loadedUsername = box.get('username');

@@ -88,7 +88,48 @@ class _AccountPageState extends State<AccountPage> {
                             ),
                             PopupMenuItem(
                               onTap: () {
-                                Get.to(() => const LogInPage());
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text(
+                                        "Log Out",
+                                        style: semiBold,
+                                      ),
+                                      content: Text(
+                                        "Clear all Settings and Log Out",
+                                        style: regularFont,
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: Text(
+                                            "Cancel",
+                                            style: semiBold.copyWith(
+                                              color: Colors.grey,
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            Hive.box('userSettings').clear();
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                        TextButton(
+                                          child: Text(
+                                            "OK",
+                                            style: bold.copyWith(
+                                              color: primaryClr,
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            Get.to(() => const LogInPage());
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
                               },
                               value: 'Log Out',
                               child: Row(

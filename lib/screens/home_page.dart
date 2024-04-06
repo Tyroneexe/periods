@@ -12,6 +12,7 @@ import 'package:periods/themes/text_styles.dart';
 
   Account page menu icon function
   Search bar in calender page
+  Settings page
   snackbar for when the day is changed or day is added
   4 Boxes in home page just shows information about your days
   Settings page
