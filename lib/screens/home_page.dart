@@ -14,7 +14,6 @@ import 'package:periods/widgets/custom_snackbar.dart';
 
 /*
 
-  Update state so that the app is dynamic 
   Notification System
   
 */
