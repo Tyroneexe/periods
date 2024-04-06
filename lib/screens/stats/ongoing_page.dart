@@ -1,27 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 import 'package:iconly/iconly.dart';
 import 'package:periods/main.dart';
+import 'package:periods/screens/home_page.dart';
 import 'package:periods/themes/colors.dart';
 import 'package:periods/themes/text_styles.dart';
 
-class CompletedPage extends StatefulWidget {
-  const CompletedPage({super.key});
+class OnGoingPage extends StatefulWidget {
+  const OnGoingPage({super.key});
 
   @override
-  State<CompletedPage> createState() => _CompletedPageState();
+  State<OnGoingPage> createState() => _OnGoingPageState();
 }
 
-class _CompletedPageState extends State<CompletedPage> {
-  List<String> prevItems = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _loadData();
-  }
-
+class _OnGoingPageState extends State<OnGoingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +56,7 @@ class _CompletedPageState extends State<CompletedPage> {
                 ),
                 Expanded(
                   child: Text(
-                    'Completed Periods',
+                    'On Going Periods',
                     textAlign: TextAlign.center,
                     style: semiBold.copyWith(
                       fontSize: 18,
@@ -80,7 +72,7 @@ class _CompletedPageState extends State<CompletedPage> {
               height: 30,
             ),
             Text(
-              'Previous Day: Day ${dayCounter == 1 ? totalDays : dayCounter - 1}',
+              'Today: Day $dayCounter',
               style: semiBold.copyWith(
                 fontSize: 24,
                 color: const Color(
@@ -98,7 +90,7 @@ class _CompletedPageState extends State<CompletedPage> {
   _periodList() {
     return Expanded(
       child: ListView.builder(
-        itemCount: prevItems.length,
+        itemCount: items.length,
         itemBuilder: (context, index) {
           Color backgroundColor;
           switch (index % 3) {
@@ -171,7 +163,7 @@ class _CompletedPageState extends State<CompletedPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        (prevItems[index]).toUpperCase(),
+                        (items[index]).toUpperCase(),
                         style: medium.copyWith(
                           fontSize: 16,
                           color: const Color(
@@ -211,16 +203,5 @@ class _CompletedPageState extends State<CompletedPage> {
         },
       ),
     );
-  }
-
-  void _loadData() {
-    var box = Hive.box('userSettings');
-
-    var storedItems = box.get(dayCounter == 1 ? totalDays : dayCounter - 1);
-    if (storedItems != null) {
-      setState(() {
-        prevItems = List<String>.from(storedItems);
-      });
-    }
   }
 }

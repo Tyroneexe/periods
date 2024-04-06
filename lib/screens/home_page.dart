@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:iconly/iconly.dart';
@@ -8,13 +6,14 @@ import 'package:periods/main.dart';
 import 'package:periods/screens/account_page.dart';
 import 'package:periods/screens/calender_page.dart';
 import 'package:periods/screens/stats/completed_page.dart';
+import 'package:periods/screens/stats/ongoing_page.dart';
 import 'package:periods/screens/stats/pending_page.dart';
 import 'package:periods/themes/colors.dart';
 import 'package:periods/themes/text_styles.dart';
+import 'package:periods/widgets/custom_snackbar.dart';
 
 /*
 
-  4 Boxes in home page just shows information about your days
   Update state so that the app is dynamic 
   Notification System
   
@@ -31,6 +30,9 @@ String username = 'Guest';
 List<String> items = [];
 
 class _HomePageState extends State<HomePage> {
+  TextEditingController dayChangeController = TextEditingController();
+  int? newDay;
+
   @override
   void initState() {
     super.initState();
@@ -311,76 +313,81 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(
               height: 5,
             ),
-            Container(
-              height: 120,
-              width: (MediaQuery.of(context).size.width / 2) - 28,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                  14,
+            GestureDetector(
+              onTap: () {
+                setUserDefinedDay(context);
+              },
+              child: Container(
+                height: 120,
+                width: (MediaQuery.of(context).size.width / 2) - 28,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    14,
+                  ),
+                  gradient: const LinearGradient(
+                    begin: Alignment.bottomLeft,
+                    end: Alignment.topRight,
+                    colors: [
+                      Color(0xFFE77D7D),
+                      Color(0xFFF7A5A5),
+                    ],
+                  ),
                 ),
-                gradient: const LinearGradient(
-                  begin: Alignment.bottomLeft,
-                  end: Alignment.topRight,
-                  colors: [
-                    Color(0xFFE77D7D),
-                    Color(0xFFF7A5A5),
+                child: Stack(
+                  children: [
+                    Positioned(
+                      top: 0,
+                      right: 20,
+                      child: Row(
+                        children: [
+                          Image.asset('assets/redArrow.png'),
+                          const SizedBox(width: 7),
+                          Image.asset('assets/redArrow.png'),
+                        ],
+                      ),
+                    ),
+                    const Positioned(
+                      top: 10,
+                      right: 10,
+                      child: Icon(
+                        IconlyLight.arrow_right,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(top: 15, bottom: 10),
+                            child: Icon(
+                              IconlyLight.close_square,
+                              color: Colors.white,
+                              size: 32,
+                            ),
+                          ),
+                          Text(
+                            'Canceled',
+                            style: medium.copyWith(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Text(
+                            'Tasks',
+                            style: regularFont.copyWith(
+                              fontSize: 14,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-              ),
-              child: Stack(
-                children: [
-                  Positioned(
-                    top: 0,
-                    right: 20,
-                    child: Row(
-                      children: [
-                        Image.asset('assets/redArrow.png'),
-                        const SizedBox(width: 7),
-                        Image.asset('assets/redArrow.png'),
-                      ],
-                    ),
-                  ),
-                  const Positioned(
-                    top: 10,
-                    right: 10,
-                    child: Icon(
-                      IconlyLight.arrow_right,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(top: 15, bottom: 10),
-                          child: Icon(
-                            IconlyLight.close_square,
-                            color: Colors.white,
-                            size: 32,
-                          ),
-                        ),
-                        Text(
-                          'Canceled',
-                          style: medium.copyWith(
-                            fontSize: 16,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Text(
-                          'Tasks',
-                          style: regularFont.copyWith(
-                            fontSize: 14,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
               ),
             ),
           ],
@@ -394,7 +401,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             GestureDetector(
               onTap: () {
-                //
+                Get.to(() => const PendingPage());
               },
               child: Container(
                 height: 120,
@@ -547,6 +554,87 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ],
+    );
+  }
+
+  Future<void> setUserDefinedDay(BuildContext context) async {
+    var box = Hive.box('userSettings');
+    newDay = await promptUserForDay(context);
+
+    if (newDay != null) {
+      await box.put('Day', newDay);
+      await box.put('lastUpdated', DateTime.now());
+    }
+  }
+
+  Future<int?> promptUserForDay(BuildContext context) async {
+    int? selectedDay;
+    return showDialog<int>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'Cancel Today',
+            style: semiBold.copyWith(
+              fontSize: 24,
+            ),
+          ),
+          content: TextField(
+            controller: dayChangeController,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              hintText: "Enter new day number",
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: primaryClr,
+                  width: 2,
+                ),
+                borderRadius: BorderRadius.circular(
+                  14,
+                ),
+              ),
+            ),
+            onChanged: (value) {
+              selectedDay = int.tryParse(value);
+            },
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                'Cancel',
+                style: medium,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text(
+                'OK',
+                style: bold.copyWith(
+                  fontSize: 14,
+                  color: primaryClr,
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(selectedDay);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: CustomSnackbar(
+                      title: 'Changed Day',
+                      subTitle: 'You have changed day to $newDay',
+                      color: primaryClr,
+                    ),
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                  ),
+                );
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 

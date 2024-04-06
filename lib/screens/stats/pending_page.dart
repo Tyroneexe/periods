@@ -1,19 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:iconly/iconly.dart';
 import 'package:periods/main.dart';
-import 'package:periods/screens/home_page.dart';
 import 'package:periods/themes/colors.dart';
 import 'package:periods/themes/text_styles.dart';
 
-class OnGoingPage extends StatefulWidget {
-  const OnGoingPage({super.key});
+class PendingPage extends StatefulWidget {
+  const PendingPage({super.key});
 
   @override
-  State<OnGoingPage> createState() => _OnGoingPageState();
+  State<PendingPage> createState() => _PendingPageState();
 }
 
-class _OnGoingPageState extends State<OnGoingPage> {
+class _PendingPageState extends State<PendingPage> {
+  List<String> nextItems = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +64,7 @@ class _OnGoingPageState extends State<OnGoingPage> {
                 ),
                 Expanded(
                   child: Text(
-                    'Completed Page',
+                    'Pending Periods',
                     textAlign: TextAlign.center,
                     style: semiBold.copyWith(
                       fontSize: 18,
@@ -72,7 +80,7 @@ class _OnGoingPageState extends State<OnGoingPage> {
               height: 30,
             ),
             Text(
-              'Today: Day $dayCounter',
+              'Next Day: Day ${(dayCounter % totalDays) + 1}',
               style: semiBold.copyWith(
                 fontSize: 24,
                 color: const Color(
@@ -90,7 +98,7 @@ class _OnGoingPageState extends State<OnGoingPage> {
   _periodList() {
     return Expanded(
       child: ListView.builder(
-        itemCount: items.length,
+        itemCount: nextItems.length,
         itemBuilder: (context, index) {
           Color backgroundColor;
           switch (index % 3) {
@@ -163,7 +171,7 @@ class _OnGoingPageState extends State<OnGoingPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        (items[index]).toUpperCase(),
+                        (nextItems[index]).toUpperCase(),
                         style: medium.copyWith(
                           fontSize: 16,
                           color: const Color(
@@ -203,5 +211,16 @@ class _OnGoingPageState extends State<OnGoingPage> {
         },
       ),
     );
+  }
+
+  void _loadData() {
+    var box = Hive.box('userSettings');
+
+    var storedItems = box.get((dayCounter % totalDays) + 1);
+    if (storedItems != null) {
+      setState(() {
+        nextItems = List<String>.from(storedItems);
+      });
+    }
   }
 }

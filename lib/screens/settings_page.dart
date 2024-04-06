@@ -108,7 +108,6 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                           ),
                           onPressed: () {
-                            Hive.box('userSettings').clear();
                             Navigator.of(context).pop();
                           },
                         ),
@@ -121,6 +120,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             ),
                           ),
                           onPressed: () {
+                            Hive.box('userSettings').clear();
                             Get.to(() => const LogInPage());
                           },
                         ),
