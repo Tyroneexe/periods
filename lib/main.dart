@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -22,11 +24,13 @@ Future<void> main() async {
   updateDayCounter();
 
   printEntireHiveBox();
+  totalDays = countCalendarDays();
 
   runApp(MyApp(isLoggedIn: isLoggedIn));
 }
 
 int dayCounter = 1;
+int totalDays = 1;
 
 //! Remove
 void printEntireHiveBox() {
@@ -46,20 +50,41 @@ Future<void> updateDayCounter() async {
       box.get('lastUpdated', defaultValue: DateTime.now()) as DateTime;
   dayCounter = box.get('Day', defaultValue: 1) as int;
 
-  if (dayCounter > 6) {
-    dayCounter = 1;
+  if (now.difference(lastUpdated).inDays != 0) {
+    dayCounter = (dayCounter % 6) + 1;
+    await box.put('Day', dayCounter);
+    await box.put('lastUpdated', DateTime(now.year, now.month, now.day));
   }
 
-  if (now.year != lastUpdated.year ||
-      now.month != lastUpdated.month ||
-      now.day != lastUpdated.day) {
-    dayCounter = dayCounter + 1;
-    await box.put('Day', dayCounter);
-    await box.put(
-      'lastUpdated',
-      DateTime(now.year, now.month, now.day),
-    );
+  Timer.periodic(
+    const Duration(minutes: 1),
+    (Timer t) async {
+      DateTime newNow = DateTime.now();
+      DateTime lastDateCheck =
+          box.get('lastUpdated', defaultValue: DateTime.now()) as DateTime;
+
+      if (newNow.difference(lastDateCheck).inDays != 0) {
+        dayCounter = ((box.get('Day', defaultValue: 1) as int) % 6) + 1;
+
+        await box.put('Day', dayCounter);
+        await box.put(
+            'lastUpdated', DateTime(newNow.year, newNow.month, newNow.day));
+      }
+    },
+  );
+}
+
+int countCalendarDays() {
+  final box = Hive.box('userSettings');
+  int dayCount = 0;
+
+  for (var key in box.keys) {
+    if (int.tryParse(key.toString()) != null) {
+      dayCount++;
+    }
   }
+
+  return dayCount;
 }
 
 class MyApp extends StatelessWidget {

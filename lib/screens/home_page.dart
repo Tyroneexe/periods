@@ -9,9 +9,17 @@ import 'package:periods/themes/colors.dart';
 import 'package:periods/themes/text_styles.dart';
 
 /*
-insert time table
-home page kla maak
-task page
+
+  Switch Day in calender page (copy account page function)
+  My Time Table page (shows all the days and the periods)
+  snackbar for when the day is changed or day is added
+  Notification System
+  Account page menu icon function
+  4 Boxes in home page just shows information about your days
+  Search bar in calender page
+  Settings page
+  
+  
 */
 
 class HomePage extends StatefulWidget {
@@ -500,7 +508,7 @@ class _HomePageState extends State<HomePage> {
                           height: 90,
                         ),
                         Text(
-                          'Completed',
+                          'On Going',
                           style: medium.copyWith(
                             fontSize: 16,
                             color: const Color(

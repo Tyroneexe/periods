@@ -5,6 +5,7 @@ import 'package:iconly/iconly.dart';
 import 'package:periods/screens/add_task_page.dart';
 import 'package:periods/screens/home_page.dart';
 import 'package:periods/screens/notepad_page.dart';
+import 'package:periods/screens/time_table_page.dart';
 import 'package:periods/themes/colors.dart';
 import 'package:periods/themes/text_styles.dart';
 
@@ -130,59 +131,64 @@ class _AccountPageState extends State<AccountPage> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          height: 160,
-          width: (MediaQuery.of(context).size.width / 2) - 30,
-          decoration: BoxDecoration(
-            color: const Color(0xFF858FE9).withOpacity(0.25),
-            borderRadius: BorderRadius.circular(
-              14,
+        GestureDetector(
+          onTap: () {
+            Get.to(() => const MyTimeTable());
+          },
+          child: Container(
+            height: 160,
+            width: (MediaQuery.of(context).size.width / 2) - 30,
+            decoration: BoxDecoration(
+              color: const Color(0xFF858FE9).withOpacity(0.25),
+              borderRadius: BorderRadius.circular(
+                14,
+              ),
             ),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 30,
-              ),
-              Container(
-                height: 60,
-                width: 60,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF858FE9),
-                  borderRadius: BorderRadius.circular(
-                    14,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  height: 30,
+                ),
+                Container(
+                  height: 60,
+                  width: 60,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF858FE9),
+                    borderRadius: BorderRadius.circular(
+                      14,
+                    ),
+                  ),
+                  child: const Icon(
+                    IconlyLight.profile,
+                    color: Colors.white,
+                    size: 28,
                   ),
                 ),
-                child: const Icon(
-                  IconlyLight.profile,
-                  color: Colors.white,
-                  size: 28,
+                const SizedBox(
+                  height: 10,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                'My Time Table',
-                style: medium.copyWith(
-                  fontSize: 14,
-                  color: const Color(
-                    0xFF10275A,
+                Text(
+                  'My Time Table',
+                  style: medium.copyWith(
+                    fontSize: 14,
+                    color: const Color(
+                      0xFF10275A,
+                    ),
                   ),
                 ),
-              ),
-              Text(
-                'Task',
-                style: medium.copyWith(
-                  fontSize: 12,
-                  color: const Color(
-                    0xFF12175D,
-                  ).withOpacity(0.5),
+                Text(
+                  'Task',
+                  style: medium.copyWith(
+                    fontSize: 12,
+                    color: const Color(
+                      0xFF12175D,
+                    ).withOpacity(0.5),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         const Spacer(),
