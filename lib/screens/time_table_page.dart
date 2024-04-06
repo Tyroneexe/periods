@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:iconly/iconly.dart';
 import 'package:periods/main.dart';
 import 'package:periods/themes/colors.dart';
 import 'package:periods/themes/text_styles.dart';
@@ -50,7 +52,26 @@ class _MyTimeTableState extends State<MyTimeTable>
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Time Table'),
+        title: Text(
+          'My Time Table',
+          style: semiBold.copyWith(
+            fontSize: 22,
+            color: const Color(
+              0xFF10275A,
+            ),
+          ),
+        ),
+        leading: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: const Icon(
+            IconlyLight.arrow_left_2,
+            color: Color(
+              0xFF10275A,
+            ),
+          ),
+        ),
         bottom: TabBar(
           indicatorColor: primaryClr,
           labelColor: primaryClr,

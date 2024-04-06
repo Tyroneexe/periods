@@ -1,6 +1,8 @@
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:hive/hive.dart';
 import 'package:iconly/iconly.dart';
 import 'package:periods/main.dart';
 import 'package:periods/screens/home_page.dart';
@@ -17,6 +19,7 @@ class CalenderPage extends StatefulWidget {
 class _CalenderPageState extends State<CalenderPage> {
   DatePickerController dateController = DatePickerController();
   TextEditingController searchController = TextEditingController();
+  TextEditingController changeDayController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -70,13 +73,18 @@ class _CalenderPageState extends State<CalenderPage> {
                     fontSize: 22,
                   ),
                 ),
-                Text(
-                  'Switch Day',
-                  style: medium.copyWith(
-                    color: const Color(
-                      0xFFA4A4A6,
+                GestureDetector(
+                  onTap: () {
+                    setUserDefinedDay(context);
+                  },
+                  child: Text(
+                    'Switch Day',
+                    style: medium.copyWith(
+                      color: const Color(
+                        0xFFA4A4A6,
+                      ),
+                      fontSize: 11,
                     ),
-                    fontSize: 11,
                   ),
                 ),
               ],
@@ -94,6 +102,75 @@ class _CalenderPageState extends State<CalenderPage> {
           ],
         ),
       ),
+    );
+  }
+
+  Future<void> setUserDefinedDay(BuildContext context) async {
+    var box = Hive.box('userSettings');
+    int? newDay = await promptUserForDay(context);
+
+    if (newDay != null) {
+      await box.put('Day', newDay);
+      await box.put('lastUpdated', DateTime.now());
+    }
+  }
+
+  Future<int?> promptUserForDay(BuildContext context) async {
+    int? selectedDay;
+    return showDialog<int>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'Set Current Day',
+            style: semiBold.copyWith(
+              fontSize: 24,
+            ),
+          ),
+          content: TextField(
+            controller: changeDayController,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              hintText: "Enter day number",
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: primaryClr,
+                  width: 2,
+                ),
+                borderRadius: BorderRadius.circular(
+                  14,
+                ),
+              ),
+            ),
+            onChanged: (value) {
+              selectedDay = int.tryParse(value);
+            },
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                'Cancel',
+                style: medium,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text(
+                'OK',
+                style: bold.copyWith(
+                  fontSize: 14,
+                  color: primaryClr,
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(selectedDay);
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 

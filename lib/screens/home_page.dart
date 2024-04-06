@@ -10,15 +10,14 @@ import 'package:periods/themes/text_styles.dart';
 
 /*
 
-  Switch Day in calender page (copy account page function)
-  My Time Table page (shows all the days and the periods)
-  snackbar for when the day is changed or day is added
-  Notification System
   Account page menu icon function
-  4 Boxes in home page just shows information about your days
   Search bar in calender page
+  snackbar for when the day is changed or day is added
+  4 Boxes in home page just shows information about your days
   Settings page
-  
+  Update state so that the app is dynamic 
+    (Change day then the home page and calender page should change day)
+  Notification System
   
 */
 

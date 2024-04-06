@@ -4,7 +4,9 @@ import 'package:hive/hive.dart';
 import 'package:iconly/iconly.dart';
 import 'package:periods/screens/add_task_page.dart';
 import 'package:periods/screens/home_page.dart';
+import 'package:periods/screens/login_page.dart';
 import 'package:periods/screens/notepad_page.dart';
+import 'package:periods/screens/settings_page.dart';
 import 'package:periods/screens/time_table_page.dart';
 import 'package:periods/themes/colors.dart';
 import 'package:periods/themes/text_styles.dart';
@@ -37,8 +39,86 @@ class _AccountPageState extends State<AccountPage> {
                 children: [
                   const Spacer(),
                   GestureDetector(
-                    onTap: () {
-                      Get.to(() => const AccountPage());
+                    onTap: () async {
+                      final RenderBox? overlay = Overlay.of(context)
+                          .context
+                          .findRenderObject() as RenderBox?;
+                      if (overlay != null) {
+                        await showMenu(
+                          color: Colors.white,
+                          context: context,
+                          position: RelativeRect.fromRect(
+                            Offset(
+                                  MediaQuery.of(context).size.width - 70,
+                                  90,
+                                ) &
+                                const Size(40, 40),
+                            Offset.zero & overlay.size,
+                          ),
+                          items: [
+                            PopupMenuItem(
+                              onTap: () {
+                                Get.to(() => const SettingsPage());
+                              },
+                              value: 'Settings',
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    IconlyLight.setting,
+                                    color: Color(
+                                      0xFF10275A,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    'Settings',
+                                    style: regularFont.copyWith(
+                                      fontSize: 16,
+                                      color: const Color(
+                                        0xFF10275A,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            PopupMenuItem(
+                              onTap: () {
+                                Get.to(() => const LogInPage());
+                              },
+                              value: 'Log Out',
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    IconlyLight.logout,
+                                    color: Color(
+                                      0xFF10275A,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    'Log Out',
+                                    style: regularFont.copyWith(
+                                      fontSize: 16,
+                                      color: const Color(
+                                        0xFF10275A,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        );
+                      }
                     },
                     child: Material(
                       borderRadius: BorderRadius.circular(
