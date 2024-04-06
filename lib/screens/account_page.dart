@@ -10,6 +10,7 @@ import 'package:periods/screens/settings_page.dart';
 import 'package:periods/screens/time_table_page.dart';
 import 'package:periods/themes/colors.dart';
 import 'package:periods/themes/text_styles.dart';
+import 'package:periods/widgets/custom_snackbar.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
@@ -20,6 +21,7 @@ class AccountPage extends StatefulWidget {
 
 class _AccountPageState extends State<AccountPage> {
   TextEditingController dayChangeController = TextEditingController();
+  int? newDay;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -379,7 +381,7 @@ class _AccountPageState extends State<AccountPage> {
 
   Future<void> setUserDefinedDay(BuildContext context) async {
     var box = Hive.box('userSettings');
-    int? newDay = await promptUserForDay(context);
+    newDay = await promptUserForDay(context);
 
     if (newDay != null) {
       await box.put('Day', newDay);
@@ -438,6 +440,18 @@ class _AccountPageState extends State<AccountPage> {
               ),
               onPressed: () {
                 Navigator.of(context).pop(selectedDay);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: CustomSnackbar(
+                      title: 'Changed Day',
+                      subTitle: 'You have changed day to $newDay',
+                      color: primaryClr,
+                    ),
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                  ),
+                );
               },
             ),
           ],

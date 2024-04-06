@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:iconly/iconly.dart';
 import 'package:periods/themes/colors.dart';
 import 'package:periods/themes/text_styles.dart';
+import 'package:periods/widgets/custom_snackbar.dart';
 
 class AddTaskPage extends StatefulWidget {
   const AddTaskPage({super.key});
@@ -293,6 +294,19 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       },
                     );
                   } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: CustomSnackbar(
+                          title: 'Created Day',
+                          subTitle:
+                              'You have created Day ${dayController.text}',
+                          color: primaryClr,
+                        ),
+                        behavior: SnackBarBehavior.floating,
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                      ),
+                    );
                     dayController.text = '';
                     numPeriodsController.text = '';
                   }
