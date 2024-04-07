@@ -22,83 +22,88 @@ class _CalenderPageState extends State<CalenderPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 50,
-            ),
-            _searchBar(),
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              'Periods',
-              style: bold.copyWith(
-                color: const Color(
-                  0xFF10275A,
-                ),
-                fontSize: 24,
+    return RefreshIndicator(
+      onRefresh: () async {
+        setState(() {});
+      },
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 50,
               ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            DatePicker(
-              DateTime.now(),
-              controller: dateController,
-              height: 90,
-              selectionColor: primaryClr,
-              dateTextStyle: medium.copyWith(fontSize: 16),
-              initialSelectedDate: DateTime.now(),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  'Day $dayCounter',
-                  style: semiBold.copyWith(
-                    color: const Color(
-                      0xFF10275A,
-                    ),
-                    fontSize: 22,
+              _searchBar(),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                'Periods',
+                style: bold.copyWith(
+                  color: const Color(
+                    0xFF10275A,
                   ),
+                  fontSize: 24,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    setUserDefinedDay(context);
-                  },
-                  child: Text(
-                    'Switch Day',
-                    style: medium.copyWith(
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              DatePicker(
+                DateTime.now(),
+                controller: dateController,
+                height: 90,
+                selectionColor: primaryClr,
+                dateTextStyle: medium.copyWith(fontSize: 16),
+                initialSelectedDate: DateTime.now(),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Day $dayCounter',
+                    style: semiBold.copyWith(
                       color: const Color(
-                        0xFFA4A4A6,
+                        0xFF10275A,
                       ),
-                      fontSize: 11,
+                      fontSize: 22,
                     ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            const Divider(
-              color: Color(
-                0xFFA4A4A6,
+                  GestureDetector(
+                    onTap: () {
+                      setUserDefinedDay(context);
+                    },
+                    child: Text(
+                      'Switch Day',
+                      style: medium.copyWith(
+                        color: const Color(
+                          0xFFA4A4A6,
+                        ),
+                        fontSize: 11,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              thickness: 1,
-            ),
-            _periodList(),
-          ],
+              const SizedBox(
+                height: 5,
+              ),
+              const Divider(
+                color: Color(
+                  0xFFA4A4A6,
+                ),
+                thickness: 1,
+              ),
+              _periodList(),
+            ],
+          ),
         ),
       ),
     );

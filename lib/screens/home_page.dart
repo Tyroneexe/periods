@@ -16,8 +16,11 @@ import 'package:periods/widgets/custom_snackbar.dart';
 
 /*
 
-  Notification System
-  
+  Notification at 7 10 12
+  save notes
+  skip weekends
+  show next day with the DatePickerTimeline
+
 */
 
 class HomePage extends StatefulWidget {
@@ -46,6 +49,7 @@ class _HomePageState extends State<HomePage>
     if (!isAllowed) {
       isAllowed =
           await AwesomeNotifications().requestPermissionToSendNotifications();
+      _scheduleNotification();
     }
     if (isAllowed) {
       _loadData();
@@ -55,68 +59,75 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 50,
-            ),
-            _topBar(),
-            const SizedBox(
-              height: 30,
-            ),
-            Text(
-              'My Day',
-              style: semiBold.copyWith(
-                fontSize: 24,
-                color: const Color(
-                  0xFF12175E,
-                ),
+    return RefreshIndicator(
+      onRefresh: () async {
+        setState(() {
+          _loadData();
+        });
+      },
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 50,
               ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            _myDayBoxes(),
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  'Today: Day $dayCounter',
-                  style: semiBold.copyWith(
-                    fontSize: 24,
-                    color: const Color(
-                      0xFF12175E,
-                    ),
+              _topBar(),
+              const SizedBox(
+                height: 30,
+              ),
+              Text(
+                'My Day',
+                style: semiBold.copyWith(
+                  fontSize: 24,
+                  color: const Color(
+                    0xFF12175E,
                   ),
                 ),
-                const Spacer(),
-                GestureDetector(
-                  onTap: () {
-                    Get.to(() => const CalenderPage());
-                  },
-                  child: Text(
-                    'View all',
-                    style: regularFont.copyWith(
-                      fontSize: 12,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              _myDayBoxes(),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Today: Day $dayCounter',
+                    style: semiBold.copyWith(
+                      fontSize: 24,
                       color: const Color(
-                        0xFF393F93,
+                        0xFF12175E,
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            _periodList(),
-          ],
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => const CalenderPage());
+                    },
+                    child: Text(
+                      'View all',
+                      style: regularFont.copyWith(
+                        fontSize: 12,
+                        color: const Color(
+                          0xFF393F93,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              _periodList(),
+            ],
+          ),
         ),
       ),
     );
@@ -717,6 +728,8 @@ class _HomePageState extends State<HomePage>
       username = loadedUsername!;
     });
 
+    dayCounter = box.get('Day') as int;
+
     var storedItems = box.get(dayCounter);
     if (storedItems != null) {
       setState(() {
@@ -769,31 +782,63 @@ class _HomePageState extends State<HomePage>
         },
       );
     } else {
-      String notificationBody = items.length >= 3
+      // Schedule the first notification for the first 3 items at 7:00
+      String firstNotificationBody = items.length >= 3
           ? "${items[0]}, ${items[1]}, ${items[2]}"
           : "Your items list is too short.";
-
-      NotificationCalendar scheduledTime = NotificationCalendar(
-        hour: 7,
-        minute: 0,
-        second: 0,
-        millisecond: 0,
-        repeats: true,
+      await scheduleNotificationAtSpecificTime(
+        -1,
+        firstNotificationBody,
+        7,
+        0,
       );
 
-      await AwesomeNotifications().createNotification(
-        content: NotificationContent(
-          id: -1,
-          channelKey: 'periods',
-          title: 'Your Items for Today',
-          body: notificationBody,
-        ),
-        schedule: scheduledTime,
-        actionButtons: [
-          NotificationActionButton(
-              key: 'ACTION_BUTTON_OPEN', label: 'Open', autoDismissible: true)
-        ],
-      );
+      // Check if there are at least 6 items to schedule the second notification
+      if (items.length >= 6) {
+        String secondNotificationBody = "${items[3]}, ${items[4]}, ${items[5]}";
+        await scheduleNotificationAtSpecificTime(
+          -2,
+          secondNotificationBody,
+          10,
+          0,
+        );
+      }
+
+      // Check if there are at least 8 items to schedule the third notification
+      if (items.length >= 8) {
+        String thirdNotificationBody = "${items[6]}, ${items[7]}";
+        await scheduleNotificationAtSpecificTime(
+          -3,
+          thirdNotificationBody,
+          12,
+          0,
+        );
+      }
     }
+  }
+
+  Future<void> scheduleNotificationAtSpecificTime(
+      int id, String body, int hour, int minute) async {
+    NotificationCalendar scheduledTime = NotificationCalendar(
+      hour: hour,
+      minute: minute,
+      second: 0,
+      millisecond: 0,
+      repeats: false,
+    );
+
+    await AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: id,
+        channelKey: 'periods',
+        title: 'Your Items for Today',
+        body: body,
+      ),
+      schedule: scheduledTime,
+      actionButtons: [
+        NotificationActionButton(
+            key: 'ACTION_BUTTON_OPEN', label: 'Open', autoDismissible: true)
+      ],
+    );
   }
 }
