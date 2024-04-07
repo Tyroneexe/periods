@@ -18,7 +18,10 @@ dependencies:
   google_fonts: ^6.2.1
   iconly: ^1.0.1
   date_picker_timeline: ^1.2.6
-  flutter_local_notifications: ^17.0.0
+
+  #Notificaitons
+  awesome_notifications_core: ^0.9.3
+  awesome_notifications: any
 
   #State Management
   get: ^4.6.6
@@ -33,6 +36,13 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^3.0.0
+
+  flutter_launcher_icons: ^0.13.1
+
+flutter_icons:
+  android: true
+  image_path: "assets/logo.png"
+
 
 flutter:
 

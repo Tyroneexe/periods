@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -35,7 +36,13 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
     _loadData();
+    _scheduleNotification();
   }
 
   @override
@@ -708,5 +715,36 @@ class _HomePageState extends State<HomePage> {
         items = List<String>.from(storedItems);
       });
     }
+  }
+
+  _scheduleNotification() async {
+    if (items == []) {
+      
+    }
+    String notificationBody = items.length >= 3
+        ? "${items[0]}, ${items[1]}, ${items[2]}"
+        : "Your items list is too short.";
+
+    NotificationCalendar scheduledTime = NotificationCalendar(
+      hour: 7,
+      minute: 0,
+      second: 0,
+      millisecond: 0,
+      repeats: true,
+    );
+
+    await AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: -1,
+        channelKey: 'periods',
+        title: 'Your Items for Today',
+        body: notificationBody,
+      ),
+      schedule: scheduledTime,
+      actionButtons: [
+        NotificationActionButton(
+            key: 'ACTION_BUTTON_OPEN', label: 'Open', autoDismissible: true)
+      ],
+    );
   }
 }

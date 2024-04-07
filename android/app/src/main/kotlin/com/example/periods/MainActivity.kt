@@ -1,4 +1,4 @@
-package com.example.periods
+package com.tiaan.periods
 
 import io.flutter.embedding.android.FlutterActivity
 
