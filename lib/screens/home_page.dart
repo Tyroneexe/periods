@@ -5,6 +5,7 @@ import 'package:hive/hive.dart';
 import 'package:iconly/iconly.dart';
 import 'package:periods/main.dart';
 import 'package:periods/screens/account_page.dart';
+import 'package:periods/screens/add_task_page.dart';
 import 'package:periods/screens/calender_page.dart';
 import 'package:periods/screens/stats/completed_page.dart';
 import 'package:periods/screens/stats/ongoing_page.dart';
@@ -29,20 +30,27 @@ class HomePage extends StatefulWidget {
 String username = 'Guest';
 List<String> items = [];
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
   TextEditingController dayChangeController = TextEditingController();
   int? newDay;
 
   @override
   void initState() {
     super.initState();
-    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
-      if (!isAllowed) {
-        AwesomeNotifications().requestPermissionToSendNotifications();
-      }
-    });
-    _loadData();
-    _scheduleNotification();
+    _requestPermissionAndProceed();
+  }
+
+  Future<void> _requestPermissionAndProceed() async {
+    bool isAllowed = await AwesomeNotifications().isNotificationAllowed();
+    if (!isAllowed) {
+      isAllowed =
+          await AwesomeNotifications().requestPermissionToSendNotifications();
+    }
+    if (isAllowed) {
+      _loadData();
+      _scheduleNotification();
+    }
   }
 
   @override
@@ -718,33 +726,74 @@ class _HomePageState extends State<HomePage> {
   }
 
   _scheduleNotification() async {
-    if (items == []) {
-      
+    if (items.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              "No Time Table",
+              style: semiBold,
+            ),
+            content: Text(
+              "Create your time table",
+              style: regularFont,
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text(
+                  "Cancel",
+                  style: semiBold.copyWith(
+                    color: Colors.grey,
+                    fontSize: 14,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: Text(
+                  "OK",
+                  style: bold.copyWith(
+                    color: primaryClr,
+                    fontSize: 16,
+                  ),
+                ),
+                onPressed: () {
+                  Get.to(() => const AddTaskPage());
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      String notificationBody = items.length >= 3
+          ? "${items[0]}, ${items[1]}, ${items[2]}"
+          : "Your items list is too short.";
+
+      NotificationCalendar scheduledTime = NotificationCalendar(
+        hour: 7,
+        minute: 0,
+        second: 0,
+        millisecond: 0,
+        repeats: true,
+      );
+
+      await AwesomeNotifications().createNotification(
+        content: NotificationContent(
+          id: -1,
+          channelKey: 'periods',
+          title: 'Your Items for Today',
+          body: notificationBody,
+        ),
+        schedule: scheduledTime,
+        actionButtons: [
+          NotificationActionButton(
+              key: 'ACTION_BUTTON_OPEN', label: 'Open', autoDismissible: true)
+        ],
+      );
     }
-    String notificationBody = items.length >= 3
-        ? "${items[0]}, ${items[1]}, ${items[2]}"
-        : "Your items list is too short.";
-
-    NotificationCalendar scheduledTime = NotificationCalendar(
-      hour: 7,
-      minute: 0,
-      second: 0,
-      millisecond: 0,
-      repeats: true,
-    );
-
-    await AwesomeNotifications().createNotification(
-      content: NotificationContent(
-        id: -1,
-        channelKey: 'periods',
-        title: 'Your Items for Today',
-        body: notificationBody,
-      ),
-      schedule: scheduledTime,
-      actionButtons: [
-        NotificationActionButton(
-            key: 'ACTION_BUTTON_OPEN', label: 'Open', autoDismissible: true)
-      ],
-    );
   }
 }
