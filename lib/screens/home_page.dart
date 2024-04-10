@@ -16,7 +16,7 @@ import 'package:periods/widgets/custom_snackbar.dart';
 
 /*
 
-  Notification at 7 10 12
+  disable notifications in the settings page
   save notes
   skip weekends
   show next day with the DatePickerTimeline
@@ -724,15 +724,16 @@ class _HomePageState extends State<HomePage>
     var box = Hive.box('userSettings');
     String? loadedUsername = box.get('username');
 
+    updateDayCounter();
+
     setState(() {
       username = loadedUsername!;
     });
 
-    dayCounter = box.get('Day') as int;
-
     var storedItems = box.get(dayCounter);
     if (storedItems != null) {
       setState(() {
+        dayCounter = box.get('Day') as int;
         items = List<String>.from(storedItems);
       });
     }
@@ -774,6 +775,7 @@ class _HomePageState extends State<HomePage>
                   ),
                 ),
                 onPressed: () {
+                  Navigator.of(context).pop();
                   Get.to(() => const AddTaskPage());
                 },
               ),

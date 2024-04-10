@@ -9,17 +9,16 @@ class NavBarController extends GetxController {
   get theme => null;
   void changeTabIndex(int index) {
     tabIndex = index;
-    _loadData();
+    // _loadData();
     update();
   }
 
   void _loadData() {
     var box = Hive.box('userSettings');
 
-    dayCounter = box.get('Day') as int;
-
     var storedItems = box.get(dayCounter);
     if (storedItems != null) {
+      dayCounter = box.get('Day') as int;
       items = List<String>.from(storedItems);
     }
   }

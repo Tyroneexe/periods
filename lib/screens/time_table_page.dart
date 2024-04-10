@@ -22,7 +22,7 @@ class _MyTimeTableState extends State<MyTimeTable>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: totalDays, vsync: this);
+    _tabController = TabController(length: totalDays!, vsync: this);
     _loadData();
 
     _tabController!.addListener(() {
@@ -48,7 +48,7 @@ class _MyTimeTableState extends State<MyTimeTable>
   @override
   Widget build(BuildContext context) {
     List<Tab> tabs =
-        List.generate(totalDays, (index) => Tab(text: "${index + 1}"));
+        List.generate(totalDays!, (index) => Tab(text: "${index + 1}"));
 
     return Scaffold(
       appBar: AppBar(
@@ -82,7 +82,7 @@ class _MyTimeTableState extends State<MyTimeTable>
       ),
       body: TabBarView(
         controller: _tabController,
-        children: List.generate(totalDays, (index) {
+        children: List.generate(totalDays!, (index) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(

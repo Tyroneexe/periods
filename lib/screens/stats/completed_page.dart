@@ -80,7 +80,7 @@ class _CompletedPageState extends State<CompletedPage> {
               height: 30,
             ),
             Text(
-              'Previous Day: Day ${dayCounter == 1 ? totalDays : dayCounter - 1}',
+              'Previous Day: Day ${dayCounter == 1 ? totalDays : dayCounter! - 1}',
               style: semiBold.copyWith(
                 fontSize: 24,
                 color: const Color(
@@ -216,7 +216,7 @@ class _CompletedPageState extends State<CompletedPage> {
   void _loadData() {
     var box = Hive.box('userSettings');
 
-    var storedItems = box.get(dayCounter == 1 ? totalDays : dayCounter - 1);
+    var storedItems = box.get(dayCounter! == 1 ? totalDays : dayCounter! - 1);
     if (storedItems != null) {
       setState(() {
         prevItems = List<String>.from(storedItems);

@@ -41,8 +41,8 @@ Future<void> main() async {
   runApp(MyApp(isLoggedIn: isLoggedIn));
 }
 
-int dayCounter = 1;
-int totalDays = 1;
+int? dayCounter = 1;
+int? totalDays;
 
 //! Remove
 void printEntireHiveBox() {
@@ -58,14 +58,24 @@ void printEntireHiveBox() {
 Future<void> updateDayCounter() async {
   var box = Hive.box('userSettings');
   DateTime now = DateTime.now();
-  DateTime lastUpdated =
-      box.get('lastUpdated', defaultValue: DateTime.now()) as DateTime;
-  dayCounter = box.get('Day', defaultValue: 1) as int;
+  DateTime startOfToday = DateTime(now.year, now.month, now.day);
 
-  if (now.difference(lastUpdated).inDays != 0) {
-    dayCounter = (dayCounter % 6) + 1;
+  // Check if 'lastUpdated' exists
+  var lastUpdatedValue = box.get('lastUpdated');
+  DateTime lastUpdated;
+
+  if (lastUpdatedValue == null) {
+    lastUpdated = startOfToday.subtract(const Duration(days: 1));
+    await box.put('lastUpdated', lastUpdated);
+  } else {
+    lastUpdated = DateTime.parse(lastUpdatedValue.toString());
+  }
+
+  if (startOfToday.difference(lastUpdated).inDays != 0) {
+    dayCounter = box.get('Day') as int? ?? 1;
+    dayCounter ??= (dayCounter ?? 1) % 6 + 1;
     await box.put('Day', dayCounter);
-    await box.put('lastUpdated', DateTime(now.year, now.month, now.day));
+    await box.put('lastUpdated', startOfToday);
   }
 
   Timer.periodic(

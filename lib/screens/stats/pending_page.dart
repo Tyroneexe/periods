@@ -80,7 +80,7 @@ class _PendingPageState extends State<PendingPage> {
               height: 30,
             ),
             Text(
-              'Next Day: Day ${(dayCounter % totalDays) + 1}',
+              'Next Day: Day ${(dayCounter! % totalDays!) + 1}',
               style: semiBold.copyWith(
                 fontSize: 24,
                 color: const Color(
@@ -216,7 +216,7 @@ class _PendingPageState extends State<PendingPage> {
   void _loadData() {
     var box = Hive.box('userSettings');
 
-    var storedItems = box.get((dayCounter % totalDays) + 1);
+    var storedItems = box.get((dayCounter! % totalDays!) + 1);
     if (storedItems != null) {
       setState(() {
         nextItems = List<String>.from(storedItems);
